@@ -3,12 +3,19 @@ const Tour = require("./../models/tourModel");
 // Route Handlers
 exports.getAllTours = async (request, response) => {
     try {
+        console.log("Query", request.query);
         // Build Query
-        const queryObject = {...request.query};
+        // Filtering
+        const queryObject = { ...request.query };
         const excludedFields = ["page", "sort", "limit", "fields"];
         excludedFields.forEach(element => delete queryObject[element]);
 
-        const query = Tour.find(queryObject);
+        // Advance Filtering
+        let queryStr = JSON.stringify(queryObject);
+        queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+        console.log("Parsed - ", JSON.parse(queryStr));
+
+        const query = Tour.find(JSON.parse(queryStr));
 
         // Execute Query
         const tours = await query;
