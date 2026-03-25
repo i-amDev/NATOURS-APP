@@ -1,12 +1,20 @@
 const Tour = require("./../models/tourModel");
 
+exports.aliasTopTours = (request, response, next) => {
+    console.log("Query - ", request.query);
+    request.query.limit = "5";
+    request.query.sort = "-ratingsAverage,price";
+    request.query.fields = "name,price,ratingsAverage,summary,difficulty";
+    next();
+}
+
 // Route Handlers
 exports.getAllTours = async (request, response) => {
     try {
         console.log("Query", request.query);
         // Build Query
         // Filtering
-        const queryObject = { ...request.query };
+        const queryObject = {...request.query};
         const excludedFields = ["page", "sort", "limit", "fields"];
         excludedFields.forEach(element => delete queryObject[element]);
 
@@ -22,8 +30,7 @@ exports.getAllTours = async (request, response) => {
             const sortBy = request.query.sort.split(",").join(" ");
             console.log(sortBy);
             query = query.sort(sortBy);
-        }
-        else {
+        } else {
             query = query.sort("-createdAt");
         }
 
@@ -31,8 +38,7 @@ exports.getAllTours = async (request, response) => {
         if (request.query.fields) {
             const fields = request.query.fields.split(",").join(" ");
             query = query.select(fields);
-        }
-        else {
+        } else {
             query = query.select("-__v");
         }
 
