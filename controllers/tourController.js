@@ -3,7 +3,22 @@ const Tour = require("./../models/tourModel");
 // Route Handlers
 exports.getAllTours = async (request, response) => {
     try {
-        const tours = await Tour.find();
+        // Build Query
+        const queryObject = {...request.query};
+        const excludedFields = ["page", "sort", "limit", "fields"];
+        excludedFields.forEach(element => delete queryObject[element]);
+
+        const query = Tour.find(queryObject);
+
+        // Execute Query
+        const tours = await query;
+
+        // const query = await Tour.find({
+        //     duration: 5,
+        //     difficulty: "easy"
+        // });
+
+        // const tours = await Tour.find().where("duration").equals(5).where("difficulty").equals("easy");
 
         response.status(200).json({
             status: "success",
