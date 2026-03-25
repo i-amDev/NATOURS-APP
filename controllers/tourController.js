@@ -36,6 +36,20 @@ exports.getAllTours = async (request, response) => {
             query = query.select("-__v");
         }
 
+        // Pagination
+        const page = request.query.page * 1 || 1;
+        const limit = request.query.limit * 1 || 100;
+        const skip = (page - 1) * limit;
+
+        query = query.skip(skip).limit(limit);
+
+        if (request.query.page) {
+            const numOfTours = await Tour.countDocuments();
+            if (numOfTours <= skip) {
+                throw new Error("This page doesn't exist");
+            }
+        }
+
         // Execute Query
         const tours = await query;
 
