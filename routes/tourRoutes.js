@@ -19,7 +19,7 @@ router.get("/:id", tourController.getTourById);
 
 router.patch("/:id", tourController.updateTour);
 
-router.delete("/:id", tourController.deleteTour);
+router.delete("/:id", authController.protect, authController.restrictTo("admin", "lead-guide") , tourController.deleteTour);
 
 // Another way of writing these five endpoints
 
