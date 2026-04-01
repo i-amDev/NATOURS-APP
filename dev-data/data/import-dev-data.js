@@ -12,7 +12,7 @@ mongoose.connect("mongodb://localhost:27017/natours", {
         console.log("Connection error ❌:", err);
     });
 
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours-simple.json`, "utf8"));
+const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours.json`, "utf8"));
 
 const importData = async () => {
     try {
