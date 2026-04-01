@@ -23,7 +23,7 @@ const tourSchema = new mongoose.Schema({
         type: String,
         required: [true, "A tour must have a difficulty"],
         enum: {
-            values : ["easy", "medium", "difficult"],
+            values: ["easy", "medium", "difficult"],
             message: "Difficulty is either easy, medium or difficult"
         }
     },
@@ -44,7 +44,7 @@ const tourSchema = new mongoose.Schema({
     priceDiscount: {
         type: Number,
         validate: {
-            validator: function(value) {
+            validator: function (value) {
                 return value < this.price;
             },
             message: "Discount price ({VALUE}) should be below regular price."
@@ -73,7 +73,30 @@ const tourSchema = new mongoose.Schema({
     secretTour: {
         type: Boolean,
         default: false
-    }
+    },
+    startLocation: {
+        type: {
+            type: String,
+            default: "Point",
+            enum: ["Point"]
+        },
+        coordinates: [Number],
+        address: String,
+        description: String,
+    },
+    locations: [
+        {
+            type: {
+                type: String,
+                default: "Point",
+                enum: ["Point"]
+            },
+            coordinates: [Number],
+            address: String,
+            description: String,
+            date: Number
+        }
+    ]
 }, {
     toJSON: {virtuals: true},
     toObject: {virtuals: true},
