@@ -1,12 +1,19 @@
 const AppError = require("./../utils/appError");
 const catchAsync = require("./../utils/catchAsync")
+const User = require("./../models/userModel")
 
-exports.getAllUsers = (request, response) => {
-    response.status(500).json({
-        status: "Error",
-        message: "This route is not yet defined",
+exports.getAllUsers = catchAsync(async (request, response) => {
+    const users = await User.find();
+
+    // SEND RESPONSE
+    response.status(200).json({
+        status: 'success',
+        results: users.length,
+        data: {
+            users
+        }
     });
-};
+});
 
 const filterObj = (obj, ...allowedFields) => {
     const newObj = {};
@@ -35,6 +42,15 @@ exports.updateMe = catchAsync(async (request, response, next) => {
         data: {
             user: updatedUser,
         }
+    });
+});
+
+exports.deleteMe = catchAsync(async (request, response, next) => {
+    await User.findByIdAndUpdate(request.user.id, {active: false});
+
+    response.status(204).json({
+        status: "success",
+        data: null
     });
 });
 
