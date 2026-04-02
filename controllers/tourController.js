@@ -80,24 +80,25 @@ exports.getAllTours = catchAsync(async (request, response) => {
     });
 });
 
-exports.createTour = catchAsync(async (request, response, next) => {
-    const newTour = await Tour.create(request.body);
-
-    response.status(201).json({
-        status: "success",
-        data: {
-            tours: newTour
-        }
-    });
-    // try {
-    //
-    // } catch (error) {
-    //     response.status(400).json({
-    //         status: "fail",
-    //         message: error.message,
-    //     })
-    // }
-});
+// exports.createTour = catchAsync(async (request, response, next) => {
+//     const newTour = await Tour.create(request.body);
+//
+//     response.status(201).json({
+//         status: "success",
+//         data: {
+//             tours: newTour
+//         }
+//     });
+//     // try {
+//     //
+//     // } catch (error) {
+//     //     response.status(400).json({
+//     //         status: "fail",
+//     //         message: error.message,
+//     //     })
+//     // }
+// });
+exports.createTour = factory.createOne(Tour);
 
 exports.getTourById = catchAsync(async (request, response, next) => {
     const tour = await Tour.findById(request.params.id).populate("reviews");
