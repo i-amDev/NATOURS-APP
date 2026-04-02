@@ -31,3 +31,14 @@ exports.updateOne = Model => catchAsync(async (request, response, next) => {
         },
     });
 });
+
+exports.createOne = Model => catchAsync(async (request, response, next) => {
+    const doc = await Model.create(request.body);
+
+    response.status(201).json({
+        status: "success",
+        data: {
+            data: doc
+        }
+    });
+});
