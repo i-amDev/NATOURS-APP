@@ -2,6 +2,7 @@ const express = require("express");
 
 const tourController = require("./../controllers/tourController");
 const authController = require("./../controllers/authController");
+const reviewController = require("./../controllers/reviewController");
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.get("/:id", tourController.getTourById);
 
 router.patch("/:id", tourController.updateTour);
 
-router.delete("/:id", authController.protect, authController.restrictTo("admin", "lead-guide") , tourController.deleteTour);
+router.delete("/:id", authController.protect, authController.restrictTo("admin", "lead-guide"), tourController.deleteTour);
 
 // Another way of writing these five endpoints
 
@@ -30,5 +31,11 @@ router.delete("/:id", authController.protect, authController.restrictTo("admin",
 //   .get(getTourById)
 //   .patch(updateTour)
 //   .delete(deleteTour);
+
+router
+    .route("/:tourId/reviews")
+    .post(authController.protect,
+        authController.restrictTo("user"),
+        reviewController.createReview);
 
 module.exports = router;
