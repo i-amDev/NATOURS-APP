@@ -42,3 +42,22 @@ exports.createOne = Model => catchAsync(async (request, response, next) => {
         }
     });
 });
+
+exports.getOne = (Model, popOptions) => catchAsync(async (request, response, next) => {
+    let query = Model.findById(request.params.id);
+    if (popOptions) {
+        query = query.populate(popOptions);
+    }
+    const doc = await query;
+
+    if (!doc) {
+        return next(new AppError("No document found with that ID", 404));
+    }
+
+    response.status(200).json({
+        status: "success",
+        data: {
+            doc,
+        },
+    });
+});
