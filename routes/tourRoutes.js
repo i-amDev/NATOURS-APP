@@ -13,15 +13,27 @@ router.route("/top-5-cheap").get(tourController.aliasTopTours, tourController.ge
 
 router.route("/tour-stats").get(tourController.getTourStats);
 
-router.route("/monthly-plan/:year").get(tourController.getMonthlyPlan);
+router
+    .route("/monthly-plan/:year")
+    .get(authController.protect,
+        authController.restrictTo("admin", "lead-guide", "guide"),
+        tourController.getMonthlyPlan);
 
-router.get("/", authController.protect, tourController.getAllTours);
+router.get("/", tourController.getAllTours);
 
-router.post("/", tourController.createTour);
+router
+    .post("/",
+        authController.protect,
+        authController.restrictTo("admin", "lead-guide"),
+        tourController.createTour);
 
 router.get("/:id", tourController.getTourById);
 
-router.patch("/:id", tourController.updateTour);
+router
+    .patch("/:id",
+        authController.protect,
+        authController.restrictTo("admin", "lead-guide"),
+        tourController.updateTour);
 
 router.delete("/:id", authController.protect, authController.restrictTo("admin", "lead-guide"), tourController.deleteTour);
 
