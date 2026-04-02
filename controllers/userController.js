@@ -3,18 +3,19 @@ const catchAsync = require("./../utils/catchAsync")
 const User = require("./../models/userModel");
 const factory = require("./handlerFactory");
 
-exports.getAllUsers = catchAsync(async (request, response) => {
-    const users = await User.find();
-
-    // SEND RESPONSE
-    response.status(200).json({
-        status: 'success',
-        results: users.length,
-        data: {
-            users
-        }
-    });
-});
+// exports.getAllUsers = catchAsync(async (request, response) => {
+//     const users = await User.find();
+//
+//     // SEND RESPONSE
+//     response.status(200).json({
+//         status: 'success',
+//         results: users.length,
+//         data: {
+//             users
+//         }
+//     });
+// });
+exports.getAllUsers = factory.getAll(User);
 
 const filterObj = (obj, ...allowedFields) => {
     const newObj = {};
