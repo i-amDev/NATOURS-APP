@@ -99,7 +99,7 @@ exports.createTour = catchAsync(async (request, response, next) => {
 });
 
 exports.getTourById = catchAsync(async (request, response, next) => {
-    const tour = await Tour.findById(request.params.id).populate("guides");
+    const tour = await Tour.findById(request.params.id).populate("reviews");
 
     if (!tour) {
         return next(new AppError("No tour found with that ID", 404));
