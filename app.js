@@ -57,6 +57,7 @@ app.use((request, response, next) => {
 //   response.send("You can post to this endpoint...");
 // });
 
+// Routes
 app.use("/api/v1/tours", tourRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/reviews", reviewRouter);
