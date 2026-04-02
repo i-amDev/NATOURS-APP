@@ -58,16 +58,17 @@ exports.deleteMe = catchAsync(async (request, response, next) => {
 exports.createUser = (request, response) => {
     response.status(500).json({
         status: "Error",
-        message: "This route is not yet defined",
+        message: "This route is not defined. Please use /signup instead",
     });
 };
 
-exports.getUserById = (request, response) => {
-    response.status(500).json({
-        status: "Error",
-        message: "This route is not yet defined",
-    });
-};
+// exports.getUserById = (request, response) => {
+//     response.status(500).json({
+//         status: "Error",
+//         message: "This route is not yet defined",
+//     });
+// };
+exports.getUserById = factory.getOne(User);
 
 // exports.updateUser = (request, response) => {
 //     response.status(500).json({
