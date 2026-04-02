@@ -114,24 +114,25 @@ exports.getTourById = catchAsync(async (request, response, next) => {
     });
 });
 
-exports.updateTour = catchAsync(async (request, response, next) => {
-    const tour = await Tour.findByIdAndUpdate(request.params.id, request.body, {
-        new: true
-        , runValidators: true
-    });
+// exports.updateTour = catchAsync(async (request, response, next) => {
+//     const tour = await Tour.findByIdAndUpdate(request.params.id, request.body, {
+//         new: true
+//         , runValidators: true
+//     });
+//
+//     if (!tour) {
+//         return next(new AppError("No tour found with that ID", 404));
+//     }
+//
+//     response.status(200).json({
+//         status: "Success",
+//         data: {
+//             tour
+//         },
+//     });
+// });
 
-    if (!tour) {
-        return next(new AppError("No tour found with that ID", 404));
-    }
-
-    response.status(200).json({
-        status: "Success",
-        data: {
-            tour
-        },
-    });
-
-});
+exports.updateTour = factory.updateOne(Tour);
 
 // exports.deleteTour = catchAsync(async (request, response, next) => {
 //     const tour = await Tour.findByIdAndDelete(request.params.id);

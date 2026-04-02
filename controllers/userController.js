@@ -69,12 +69,14 @@ exports.getUserById = (request, response) => {
     });
 };
 
-exports.updateUser = (request, response) => {
-    response.status(500).json({
-        status: "Error",
-        message: "This route is not yet defined",
-    });
-};
+// exports.updateUser = (request, response) => {
+//     response.status(500).json({
+//         status: "Error",
+//         message: "This route is not yet defined",
+//     });
+// };
+// Do not update passwords with this!
+exports.updateUser = factory.updateOne(User);
 
 // exports.deleteUser = (request, response) => {
 //     response.status(500).json({
